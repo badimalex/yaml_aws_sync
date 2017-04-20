@@ -1,0 +1,7 @@
+type:  !ruby/regexp '/^catalog_/'
+
+# Example
+# import only tables defined bellow
+# tables:
+#   - catalog_decoration_formulas
+#   - catalog_decoration_images
