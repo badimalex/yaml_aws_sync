@@ -29,7 +29,7 @@ namespace :aws do
         folders.slice!('folders=')
         @image_folders = folders.split(',')
       else
-        @image_folders = YAML::load File.open("../rules/images/folders.yml") rescue @image_folders = nil
+        @image_folders = YAML::load File.open("config/aws/folders.yml") rescue @image_folders = nil
       end
     end
 

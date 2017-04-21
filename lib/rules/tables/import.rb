@@ -5,7 +5,7 @@ class ImportRules
       self.apply_console_rules(file_name)
     else
       @file_name = file_name
-      @import_rules = YAML::load File.open(File.dirname(__FILE__) + '/names.yml')
+      @import_rules = YAML::load File.open("config/aws/tables.yml")
       self.send 'clean_by_tables' if @import_rules['tables'].present?
       self.send 'clean_by_regex' if @import_rules['type'].present?
     end
