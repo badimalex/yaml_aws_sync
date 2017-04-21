@@ -1,5 +1,6 @@
 module YamlAwsSync
   class InstallGenerator < Rails::Generators::Base
+
     def create_files
       create_file 'config/aws/folders.yml', [
           '# Absolute aws3 paths',
@@ -20,5 +21,6 @@ module YamlAwsSync
         ''
       ].join("\n")
     end
+
   end
 end

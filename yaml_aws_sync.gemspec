@@ -17,8 +17,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", ">= 4.2.0"
 
-
   s.add_dependency 'archive-zip'
+  s.add_dependency 'fog'
   s.add_dependency 'fog-aws'
   s.add_dependency 'aws-sdk'
 end
