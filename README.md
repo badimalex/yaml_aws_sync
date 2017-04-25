@@ -18,10 +18,17 @@ $ rails g yaml_aws_sync:install
 $ rails g yaml_aws_sync:capistrano
 ```
 
+- Доступные задачи для capistrano:
+
+```sh
+$ cap aws:sync:backup_zip_to_s3
+$ cap aws:sync:restore_images_from_s3
+$ cap aws:sync:restore_zip_from_s3
+```
+
 Для хранения конфигураций используйте гем:
 
     gem 'config'
-
 
 ```sh
 $ rails g config:install
