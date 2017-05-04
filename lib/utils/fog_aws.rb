@@ -45,7 +45,11 @@ class FogAws
       FileUtils.copy_entry dump_dir("/#{@backup_source}"), dump_dir("/base")
 
       puts 'Отправка файлов резервной копии в БД'
-      Rake::Task['yaml:run'].invoke
+      if Rake::Task.task_defined?('yaml:run')
+        Rake::Task['yaml:run'].invoke
+      else
+        Rake::Task['db:data:load_dir'].invoke
+      end
 
       puts 'Удаление временных файлов'
       ArchiveZip.remove_folder_and_zip(@backup_source)
