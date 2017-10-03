@@ -10,7 +10,7 @@ class FogAws
   @backup_target = Settings.aws.backup.yaml.target
 
   class << self
-    def backup_to_s3
+    def backup_to_s3(dir)
       puts 'Получение файлов резервной копии из БД'
       YamlDb::RakeTasks.db_to_yml(@backup_target)
 
@@ -18,7 +18,7 @@ class FogAws
       ArchiveZip.add_to_zip(@backup_target)
 
       puts 'Отправка резервной копии в хранилище'
-      backup_zip_to_s3(@backup_target)
+      backup_zip_to_s3(@backup_target, dir)
 
       puts 'Удаление временных файлов'
       ArchiveZip.remove_folder_and_zip(@backup_target)
@@ -63,7 +63,7 @@ class FogAws
       ArchiveZip.remove_folder_and_zip(@backup_source)
     end
 
-    def backup_zip_to_s3(file_name)
+    def backup_zip_to_s3(file_name, dir)
       connection = connection_to_aws
       directory = connection.directories.get(@bucket)
 
@@ -77,7 +77,7 @@ class FogAws
       p connection.directories
 
       s3_file = directory.files.create(
-        key:    "#{file_name}.zip",
+        key:    "#{dir}/#{file_name}.zip",
         body:   File.open(dump_dir("/#{file_name}.zip")),
         public: false
       )
@@ -89,7 +89,7 @@ class FogAws
       directory = connection.directories.get(@bucket)
 
       if directory
-        s3_file = directory.files.get("#{file_name}.zip")
+        s3_file = directory.files.get("source/#{file_name}.zip")
 
         if s3_file
           local_file = File.open(dump_dir("/#{file_name}.zip"), 'w:ASCII-8BIT')
